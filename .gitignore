@@ -3,6 +3,6 @@
 *.csv
 *.txt
 *.wav
-data/*
 *.pkl
 *.zip
+/venv

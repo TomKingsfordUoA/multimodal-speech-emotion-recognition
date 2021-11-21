@@ -1,0 +1,13 @@
+/RAVDESS
+/TESS
+/TESS.zip
+/RAVDESS_extracted
+/train_ravdess.csv
+/test_ravdess.csv
+/train_ravdess_pred.csv
+/test_ravdess_pred.csv
+/train_pred.csv
+/test_pred.csv
+/xgb.model
+/xgb.pickle
+/xgb.json

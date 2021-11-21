@@ -25,6 +25,11 @@ All the experiments have been tested using the following libraries:
 
 To avoid conflicts, it is recommended to setup a new python virtual environment to install these libraries. Once the env is setup, run `pip install -r requirements.txt` to install the dependencies.
 
+## Data Versioning
+DVC has been used to track various data processing and model training stages. This ensures both repeatability and posterity, as the nature of 
+processing is recorded as are the results. The actual data is stored in an S3-compliant object store which isn't publicly available. Artifacts can 
+be made available upon request to tkin063@aucklanduni.ac.nz.
+
 ## Instructions to run the code
 1. Clone this repository by running `git clone git@github.com:Demfier/multimodal-speech-emotion-recognition`.
 2. Go to the root directory of this project by running `cd multimodal-speech-emotion-recognition/` in your terminal.

@@ -1,0 +1,44 @@
+stages:
+  extract_ravdess:
+    cmd: python extract_ravdess.py
+    deps:
+    - RAVDESS
+    - extract_ravdess.py
+    outs:
+    - RAVDESS_extracted
+  split_data:
+    cmd: python split_data.py
+    deps:
+    - RAVDESS_extracted
+    - split_data.py
+    outs:
+    - test_ravdess.csv
+    - train_ravdess.csv
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+    - preprocess.py
+    - test_ravdess.csv
+    - train_ravdess.csv
+    outs:
+    - test_features.csv
+    - train_features.csv
+  train:
+    cmd: python train.py
+    deps:
+    - train.py
+    - train_ravdess.csv
+    outs:
+    - xgb.pickle
+    - xgb.txt
+    - xgb.json
+  predict:
+    cmd: python predict.py
+    deps:
+    - test_features.csv
+    - train_features.csv
+    - xgb.txt
+    outs:
+    - test_pred.csv
+    - train_pred.csv
+    - validation_pred.csv

@@ -1,0 +1,94 @@
+schema: '2.0'
+stages:
+  extract_ravdess:
+    cmd: python extract_ravdess.py
+    deps:
+    - path: RAVDESS
+      md5: 143a9fe96d068f2924eb0a3621d878fb.dir
+      size: 25600221058
+      nfiles: 51
+    - path: extract_ravdess.py
+      md5: b9a9eda722d23ad8651e879f8033f5b0
+      size: 660
+    outs:
+    - path: RAVDESS_extracted
+      md5: 199b3fe4b28145788675ea28122352ae.dir
+      size: 26648482148
+      nfiles: 7356
+  split_data:
+    cmd: python split_data.py
+    deps:
+    - path: RAVDESS_extracted
+      md5: 199b3fe4b28145788675ea28122352ae.dir
+      size: 26648482148
+      nfiles: 7356
+    - path: split_data.py
+      md5: 9d4f652607af41133453c42ad9fb09bc
+      size: 3096
+    outs:
+    - path: test_ravdess.csv
+      md5: db6b062178cd6823b8bf713d1293ac60
+      size: 18753
+    - path: train_ravdess.csv
+      md5: 1e5e785700ac92133a7cc99af66fc5e5
+      size: 71225
+  preprocess:
+    cmd: python preprocess.py
+    deps:
+    - path: preprocess.py
+      md5: cfb0c844047bd6236f2da7abea19c3c7
+      size: 2460
+    - path: test_ravdess.csv
+      md5: db6b062178cd6823b8bf713d1293ac60
+      size: 18753
+    - path: train_ravdess.csv
+      md5: 1e5e785700ac92133a7cc99af66fc5e5
+      size: 71225
+    outs:
+    - path: test_features.csv
+      md5: 0d861c02abee622efb9d4dd0d1f2a08a
+      size: 70494
+    - path: train_features.csv
+      md5: 09baad31b7fb752719a719ddc0b78162
+      size: 267513
+  train:
+    cmd: python train.py
+    deps:
+    - path: train.py
+      md5: d2fb7142cec40e48ebff1bd5148fd700
+      size: 2244
+    - path: train_ravdess.csv
+      md5: 1e5e785700ac92133a7cc99af66fc5e5
+      size: 71225
+    outs:
+    - path: xgb.json
+      md5: 23f160df2b4bbf14dbf1936921e10f54
+      size: 86299996
+    - path: xgb.pickle
+      md5: 9d397ab1c30ae00c0051af35be7ac432
+      size: 86301332
+    - path: xgb.txt
+      md5: 23f160df2b4bbf14dbf1936921e10f54
+      size: 86299996
+  predict:
+    cmd: python predict.py
+    deps:
+    - path: test_features.csv
+      md5: 0d861c02abee622efb9d4dd0d1f2a08a
+      size: 70494
+    - path: train_features.csv
+      md5: 09baad31b7fb752719a719ddc0b78162
+      size: 267513
+    - path: xgb.txt
+      md5: 23f160df2b4bbf14dbf1936921e10f54
+      size: 86299996
+    outs:
+    - path: test_pred.csv
+      md5: 8e6ba28fbbc6fe4a8d012dfccd08bd30
+      size: 69335
+    - path: train_pred.csv
+      md5: c67fc7855766dd37b873e449bd334214
+      size: 211667
+    - path: validation_pred.csv
+      md5: 077b108d8093b82ce676c0cbf753948b
+      size: 52845
